@@ -9,7 +9,7 @@ class Color {
       purple: this.rgb(153, 102, 255),
       grey: this.rgb(201, 203, 207)
     };
-    const a = 0.2
+    const a = 0.1
     this.bgcolors = {
       red: this.rgba(255, 99, 132, a),
       orange: this.rgba(255, 159, 64, a),
@@ -19,6 +19,15 @@ class Color {
       purple: this.rgba(153, 102, 255, a),
       grey: this.rgba(201, 203, 207, a)
     }
+    this.series = [
+      this.colorItem('red'),
+      this.colorItem('orange'),
+      this.colorItem('yellow'),
+      this.colorItem('green'),
+      this.colorItem('blue'),
+      this.colorItem('purple'),
+      this.colorItem('grey'),
+    ]
   }
   rgba(r, g, b, a) {
     return `rgba(${r}, ${g}, ${b}, ${a})`
@@ -26,14 +35,17 @@ class Color {
   rgb(r, g, b) {
     return this.rgba(r, g, b, 1.0)
   }
+  colorItem(name) {
+    return {color: this.colors[name], bgcolor: this.bgcolors[name]}
+  }
 }
 
 class DownloadGraph {
 
   constructor(canvasId) {
     this.canvasId = canvasId
-    this.main()
     this.color = new Color()
+    this.main()
   }
 
   async main() {
@@ -58,14 +70,17 @@ class DownloadGraph {
 
     const date2day = (str_date) => {
       const date = new Date(str_date)
+      // date.setHours(date.getHours() + 10)
       return date.toString().slice(0, 15)
     }
     const aggregateDailyData = (dates, values) => {
       const dailyDataDict = dates.reduce((acc, date, index) => {
         const day = date2day(date)
+        const dateFmt = `2019-02-02T${(new Date(date)).toString().slice(16, 24)}.000000`
+        // console.log(dateFmt)
         const item = {
           day: day,
-          date: date,
+          date: dateFmt,
           value: values[index],
         }
         if(day in acc) {
@@ -90,10 +105,12 @@ class DownloadGraph {
     const config = {
       type: 'line',
       data: {
-        datasets: data.dataDaily.map(daily => ({
-          label: 'Download speed: ' + daily[0].day,
-          backgroundColor: this.color.bgcolors.red,
-          borderColor: this.color.colors.red,
+        datasets: data.dataDaily.map((daily, index) => ({
+          label: 'Download [Mbps]: ' + daily[0].day,
+          backgroundColor: this.color.series[index].bgcolor,
+          borderColor: this.color.series[index].color,
+          borderWidth: 1,
+          radius: 1,
           data: daily.map(item => ({
             x: item.date,
             y: item.value,
@@ -125,7 +142,7 @@ class DownloadGraph {
               unit: 'hour',
               displayFormats: {
                 hour: 'HH'
-              }
+              },
             },
             scaleLabel: {
               display: true,

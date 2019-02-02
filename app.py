@@ -12,6 +12,7 @@ def index():
 
 @app.route('/speed.json')
 def speed_json():
+    # data = load_speed_csv('./csv/speed_test.csv')
     data = load_speed_csv('./csv/speed.csv')
     data_res = create_response_data(data)
     return json.dumps(data_res)
