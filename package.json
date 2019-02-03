@@ -1,0 +1,10 @@
+{
+  "name": "speedtest",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "tat3 <tat.github@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "browserify": "^16.2.3"
+  }
+}
