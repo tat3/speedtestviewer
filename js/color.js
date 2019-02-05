@@ -38,6 +38,15 @@ class Color {
   colorItem(name) {
     return {color: this.colors[name], bgcolor: this.bgcolors[name]}
   }
+  *colorPicker() {
+    let i = 0
+    while(true) {
+      yield this.series[i++]
+      if (i === this.series.length) {
+        i = 0
+      }
+    }
+  }
 }
 
 module.exports = Color

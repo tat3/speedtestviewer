@@ -71,23 +71,27 @@ class DownloadGraph {
   }
 
   createCanvas(data, canvasId) {
+    const cp = this.color.colorPicker()
     const config = {
       type: 'line',
       // type: 'scatter',
       data: {
-        datasets: data.dataDaily.map((daily, index) => ({
-          label: 'Download [Mbps]: ' + daily[0].day,
-          backgroundColor: this.color.series[index].bgcolor,
-          borderColor: this.color.series[index].color,
-          borderWidth: 1,
-          radius: 1,
-          data: daily.map(item => ({
-            x: item.date,
-            y: item.value,
-          })),
-          fill: false,
-          lineTension: 0,
-        })),
+        datasets: data.dataDaily.map((daily, index) => {
+          const color = cp.next().value
+          return {
+            label: 'Download [Mbps]: ' + daily[0].day,
+            backgroundColor: color.bgcolor,
+            borderColor: color.color,
+            borderWidth: 1,
+            radius: 1,
+            data: daily.map(item => ({
+              x: item.date,
+              y: item.value,
+            })),
+            fill: false,
+            lineTension: 0,
+          }
+        }),
       },
       options: {
         responsive: true,
