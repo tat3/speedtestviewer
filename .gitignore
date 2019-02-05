@@ -1,4 +1,5 @@
-*.csv
+csv/*.csv
+static/js/bundle.js
 
 # Logs
 logs
