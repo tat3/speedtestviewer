@@ -1,5 +1,7 @@
 # SpeedTest Viewer
 
+![example image](/static/image/speedtestviewer.jpg)
+
 ## Usage
 
 ```bash
