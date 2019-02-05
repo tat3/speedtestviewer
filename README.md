@@ -1,6 +1,6 @@
 # SpeedTest Viewer
 
-![example image](/static/image/speedtestviewer.jpg)
+![example image](/static/image/speedtestviewer.png)
 
 ## Usage
 
